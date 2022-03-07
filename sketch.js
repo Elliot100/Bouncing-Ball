@@ -4,6 +4,7 @@ var wx = window.innerWidth;
 var wy = window.innerHeight;
 const GRAVITY = 0.99;
 const ACC = 1.2;
+const colors = ["lime","cyan","pink","yellow","fuchsia","orange"];
 
 function randomColor() {
   return (
@@ -24,7 +25,7 @@ function setup() {
 }
 
 function Ball() {
-  this.color = randomColor();
+  this.color = colors[Math.floor(Math.random() * colors.length)];
   this.radius = Math.random() * 20 + 14;
   this.x = Math.random() * (wx - this.radius * 2) + this.radius;
   this.y = Math.random() * (wy - this.radius);
@@ -60,6 +61,20 @@ function mousepressed(x, y) {
   }
 }
 
+function Clickanywhere() {
+  this.color = 'black';
+  this.show = function() {
+    fill(this.color);
+    textSize(32);
+    text("click anywhere!", wx / 2, wy / 2);
+    textAlign(CENTER);
+    textFont('comic-sans');
+    textStyle(BOLD);
+  }
+}
+
+var ca = new Clickanywhere();
+
 function draw() {
   if (wx != window.innerWidth || wy != innerHeight) {
     wx = window.innerWidth;
@@ -67,13 +82,15 @@ function draw() {
     resizeCanvas(wx, wy)
   }
   background(56,220, 250);
+  ca.show();
+
   for (var i = 0; i < bal.length; i++) {
     bal[i].update();
     bal[i].x += bal[i].dx;
     bal[i].y += bal[i].dy;
     
     //bounce
-    if (bal[i].y + bal[i].radius > wy || bal[i].y - bal[i].radius < 0) {
+    if (bal[i].y + bal[i].radius > wy ) {
       bal[i].dy = -bal[i].dy * GRAVITY;
     } else {
       bal[i].dy += bal[i].vel;
@@ -89,8 +106,8 @@ function draw() {
   }
 }
 
-setInterval(function() {
-  bal.push(new Ball());
-  bal.splice(0,1);
-}, 500);
+// setInterval(function() {
+//   bal.push(new Ball());
+//   bal.splice(0,1);
+// }, 500);
 
