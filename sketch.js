@@ -3,6 +3,7 @@
 var wx = window.innerWidth;
 var wy = window.innerHeight;
 const GRAVITY = 0.99;
+const ACC = 1.2;
 
 function randomColor() {
   return (
@@ -43,14 +44,27 @@ for (var i=0; i<30; i++) {
   bal.push(new Ball());
 }
 
+function mousepressed(x, y) {
+  for (var i = 0; i < 30; i++) {
+    if (bal[i].y < y) {
+      bal[i].dy = -abs(bal[i].dy) * ACC;
+    } else { 
+      bal[i].dy = abs(bal[i].dy) * ACC;
+    }
+
+    if (bal[i].x < x) {
+      bal[i].dx = -abs(bal[i].dx) * ACC;
+    } else {
+      bal[i].dx = abs(bal[i].dx) * ACC;
+    }
+  }
+}
 
 function draw() {
   if (wx != window.innerWidth || wy != innerHeight) {
     wx = window.innerWidth;
     wy = window.innerHeight;
     resizeCanvas(wx, wy)
-    // canvas.width = wx;
-    // canvas.height = wy;
   }
   background(56,220, 250);
   for (var i = 0; i < bal.length; i++) {
@@ -59,7 +73,7 @@ function draw() {
     bal[i].y += bal[i].dy;
     
     //bounce
-    if (bal[i].y + bal[i].radius > wy) {
+    if (bal[i].y + bal[i].radius > wy || bal[i].y - bal[i].radius < 0) {
       bal[i].dy = -bal[i].dy * GRAVITY;
     } else {
       bal[i].dy += bal[i].vel;
@@ -71,8 +85,7 @@ function draw() {
 
   //interaction
   if(mouseIsPressed) {
-    ballx = mouseX;
-    bally = mouseY;
+    mousepressed(mouseX, mouseY);
   }
 }
 
