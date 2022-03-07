@@ -1,13 +1,10 @@
 
 //setup variables
-ballx = 200;
-bally = 50;
-balldx = 1;
-balldy = 0;
-GRAVITY = 0.1;
+var wx = window.innerWidth;
+var wy = window.innerHeight;
+const GRAVITY = 0.99;
 
 function randomColor() {
-  console.log("Hello World");
   return (
     "rgba(" +
     Math.round(Math.random() * 250) +
@@ -16,46 +13,56 @@ function randomColor() {
     "," +
     Math.round(Math.random() * 250) +
     "," +
-    Math.ceil(Math.random() * 10) / 10 +
+    Math.ceil(Math.random() * 10) / 5 +
     ")"
   );
 }
 
 function setup() {
-  createCanvas(400,300);
+  createCanvas(wx,wy);
 }
 
 function Ball() {
+  this.color = randomColor();
+  this.radius = Math.random() * 20 + 14;
+  this.x = Math.random() * (wx - this.radius * 2) + this.radius;
+  this.y = Math.random() * (wy - this.radius);
+  this.dy = Math.random() * 2;
+  this.dx = Math.round((Math.random() - 0.5) * 10);
+  this.vel = Math.random() / 5;
+
   this.update = function() {
-    fill(0,200,0);
+    fill(this.color);
     noStroke();
-    circle(ballx, bally, 20);
+    circle(this.x, this.y, this.radius * 2);
   }
 }
 
 var bal = [];
-bal.push(new Ball());
+for (var i=0; i<30; i++) {
+  bal.push(new Ball());
+}
+
 
 function draw() {
   background(56,220, 250);
   //move ball
-  balldy += GRAVITY;
-  bally += balldy;
-  ballx += balldx;
-  //bounce
-  if(bally > 290) {
-    balldy *= -1;
-  }
-  if(ballx > 390 || ballx < 10) {
-    balldx *= -1;
-  }
 
-  //draw ball
- 
-  bal[0].update();
-  // fill(0,200,0);
-  // noStroke();
-  // circle(ballx, bally, 20);
+  for (var i = 0; i < bal.length; i++) {
+    bal[i].update();
+    bal[i].x += bal[i].dx;
+    bal[i].y += bal[i].dy;
+    
+    //bounce
+    if (bal[i].y + bal[i].radius > wy) {
+      bal[i].dy = -bal[i].dy * GRAVITY;
+    } else {
+      bal[i].dy += bal[i].vel;
+    }
+    if (bal[i].x + bal[i].radius > wx || bal[i].x - bal[i].radius < 0) {
+      bal[i].dx *= -1;
+    }
+  }
 
   //interaction
   if(mouseIsPressed) {
@@ -63,4 +70,9 @@ function draw() {
     bally = mouseY;
   }
 }
+
+setInterval(function() {
+  bal.push(new Ball());
+  bal.splice(0,1);
+}, 500);
 
