@@ -6,18 +6,42 @@ balldx = 1;
 balldy = 0;
 GRAVITY = 0.1;
 
+function randomColor() {
+  console.log("Hello World");
+  return (
+    "rgba(" +
+    Math.round(Math.random() * 250) +
+    "," +
+    Math.round(Math.random() * 250) +
+    "," +
+    Math.round(Math.random() * 250) +
+    "," +
+    Math.ceil(Math.random() * 10) / 10 +
+    ")"
+  );
+}
+
 function setup() {
   createCanvas(400,300);
 }
 
-function draw() {
-  background(0, 200, 0);
+function Ball() {
+  this.update = function() {
+    fill(0,200,0);
+    noStroke();
+    circle(ballx, bally, 20);
+  }
+}
 
+var bal = [];
+bal.push(new Ball());
+
+function draw() {
+  background(56,220, 250);
   //move ball
   balldy += GRAVITY;
   bally += balldy;
   ballx += balldx;
-
   //bounce
   if(bally > 290) {
     balldy *= -1;
@@ -27,8 +51,11 @@ function draw() {
   }
 
   //draw ball
-  fill(0,0,200);
-  circle(ballx, bally, 20);
+ 
+  bal[0].update();
+  // fill(0,200,0);
+  // noStroke();
+  // circle(ballx, bally, 20);
 
   //interaction
   if(mouseIsPressed) {
@@ -36,3 +63,4 @@ function draw() {
     bally = mouseY;
   }
 }
+
