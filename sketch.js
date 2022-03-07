@@ -45,9 +45,14 @@ for (var i=0; i<30; i++) {
 
 
 function draw() {
+  if (wx != window.innerWidth || wy != innerHeight) {
+    wx = window.innerWidth;
+    wy = window.innerHeight;
+    resizeCanvas(wx, wy)
+    // canvas.width = wx;
+    // canvas.height = wy;
+  }
   background(56,220, 250);
-  //move ball
-
   for (var i = 0; i < bal.length; i++) {
     bal[i].update();
     bal[i].x += bal[i].dx;
