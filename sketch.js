@@ -48,16 +48,16 @@ for (var i=0; i<30; i++) {
 
 function mousepressed(x, y) {
   for (var i = 0; i < 30; i++) {
-    if (bal[i].y < y) {
-      bal[i].dy = -abs(bal[i].dy) * ACC;
-    } else { 
-      bal[i].dy = abs(bal[i].dy) * ACC;
+    if (bal[i].y <= y && bal[i].y >= 20) {
+      bal[i].dy = -abs(bal[i].dy) * GRAVITY;
+    } else if (bal[i].y > y && bal[i].y <= wy) {
+      bal[i].dy = abs(bal[i].dy) * GRAVITY;
     }
 
-    if (bal[i].x < x) {
-      bal[i].dx = -abs(bal[i].dx) * ACC;
-    } else {
-      bal[i].dx = abs(bal[i].dx) * ACC;
+    if (bal[i].x <= x && bal[i].x >= 20) {
+      bal[i].dx = -abs(bal[i].dx) * GRAVITY;
+    } else if (bal[i].x > x && bal[i].x <= wx) {
+      bal[i].dx = abs(bal[i].dx) * GRAVITY;
     }
   }
 }
