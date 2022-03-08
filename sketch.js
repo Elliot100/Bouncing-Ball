@@ -78,11 +78,6 @@ let trail = [];
 let a = 0;
 
 function draw() {
-  if (wx != window.innerWidth || wy != innerHeight) {
-    wx = window.innerWidth;
-    wy = window.innerHeight;
-    resizeCanvas(wx, wy)
-  }
   background(56,220, 250);
   ca.show();
 
@@ -92,7 +87,7 @@ function draw() {
     bal[i].y += bal[i].dy;
     
     //bounce
-    if (bal[i].y + bal[i].radius >= wy || bal[i].y - bal[i].radius <= 0) {
+    if (bal[i].y + bal[i].radius >= wy ) {
       bal[i].dy = -bal[i].dy * GRAVITY;
     } else {
       bal[i].dy += bal[i].vel;
@@ -119,3 +114,8 @@ function draw() {
    }
 }
 
+function windowResized() {
+    wx = window.innerWidth;
+    wy = window.innerHeight;
+  resizeCanvas(windowWidth, windowHeight);
+}
