@@ -67,9 +67,8 @@ function Clickanywhere() {
   this.show = function() {
     fill(this.color);
     textSize(32);
-    text("click anywhere!", wx / 2, wy / 2);
+    text("click around!", wx / 2, wy / 2);
     textAlign(CENTER);
-    textFont('comic-sans');
     textStyle(BOLD);
   }
 }
@@ -93,12 +92,12 @@ function draw() {
     bal[i].y += bal[i].dy;
     
     //bounce
-    if (bal[i].y + bal[i].radius > wy ) {
+    if (bal[i].y + bal[i].radius >= wy || bal[i].y - bal[i].radius <= 0) {
       bal[i].dy = -bal[i].dy * GRAVITY;
     } else {
       bal[i].dy += bal[i].vel;
     }
-    if (bal[i].x + bal[i].radius > wx || bal[i].x - bal[i].radius < 0) {
+    if (bal[i].x + bal[i].radius >= wx || bal[i].x - bal[i].radius <= 0) {
       bal[i].dx *= -1;
     }
   }
@@ -119,9 +118,4 @@ function draw() {
      a += 8;
    }
 }
-
-// setInterval(function() {
-//   bal.push(new Ball());
-//   bal.splice(0,1);
-// }, 500);
 
