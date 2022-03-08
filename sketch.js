@@ -6,6 +6,7 @@ const GRAVITY = 0.99;
 const ACC = 1.2;
 const colors = ["lime","cyan","pink","yellow","fuchsia","orange"];
 
+
 function randomColor() {
   return (
     "rgba(" +
@@ -62,7 +63,7 @@ function mousepressed(x, y) {
 }
 
 function Clickanywhere() {
-  this.color = 'black';
+  this.color = 'gray';
   this.show = function() {
     fill(this.color);
     textSize(32);
@@ -74,6 +75,8 @@ function Clickanywhere() {
 }
 
 var ca = new Clickanywhere();
+let trail = [];
+let a = 0;
 
 function draw() {
   if (wx != window.innerWidth || wy != innerHeight) {
@@ -104,6 +107,17 @@ function draw() {
   if(mouseIsPressed) {
     mousepressed(mouseX, mouseY);
   }
+   trail.push([mouseX, mouseY]);
+   for (let i = 0; i < trail.length; i++) {
+     noStroke();
+     fill(255, 20, 189, a);
+     ellipse(trail[i][0], trail[i][1], i);
+     if (a > 255) {
+       trail.shift();
+       a = 0;
+     }
+     a += 8;
+   }
 }
 
 // setInterval(function() {
