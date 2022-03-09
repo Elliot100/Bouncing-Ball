@@ -33,7 +33,7 @@ function Ball() {
   this.y = Math.random() * (wy - this.radius);
   this.dy = Math.random() * 2;
   this.dx = Math.round((Math.random() - 0.5) * 10);
-  this.vel = 0.5;
+  this.vel = 0.1;
   // this.vel = Math.random() / 5;
 
   this.update = function() {
@@ -41,10 +41,19 @@ function Ball() {
     noStroke();
     circle(this.x, this.y, this.radius * 2);
   }
+
+  this.intersects = function(other) {
+    var d = dist(this.x,this.y,other.x,other.y);
+    if (d < (this.radius + other.radius) ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 var bal = [];
-for (var i=0; i<50; i++) {
+for (var i=0; i<30; i++) {
   bal.push(new Ball());
 }
 
@@ -104,6 +113,14 @@ function draw() {
 
   for (var i = 0; i < bal.length; i++) {
     bal[i].update();
+    for (var j = i+1; j < bal.length; j++) {
+      if (bal[i].intersects(bal[j]) ) {
+        bal[i].dx *= -1;
+        bal[i].dy *= -1;
+        bal[j].dx *= -1;
+        bal[j].dy *= -1;
+      }
+    }
     bal[i].x += bal[i].dx;
     bal[i].y += bal[i].dy;
     
