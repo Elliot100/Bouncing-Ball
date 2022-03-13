@@ -43,7 +43,16 @@ function Ball() {
   }
 
   this.intersects = function(other) {
-    var d = dist(this.x,this.y,other.x,other.y);
+    // console.log("this",this);
+    // console.log("other", other);
+    // var a = x1 - x2;
+    // var b = y1 - y2;
+
+    // var c = Math.sqrt(a * a + b * b);
+    // var d = dist(this.x,this.y,other.x,other.y);
+    var a = other.y - this.y;
+    var b = other.x - this.x;
+    var d = Math.sqrt(a*a + b*b);
     if (d < (this.radius + other.radius) ) {
       return true;
     } else {
@@ -53,9 +62,28 @@ function Ball() {
 }
 
 var bal = [];
-for (var i=0; i<30; i++) {
+var newball = false;
+bal.push(new Ball());
+// console.log(bal[0]);
+for(var i = 1; i < 30 ; i++) {
+  // bal[i] = new Ball();
   bal.push(new Ball());
+  // console.log(i," ",bal[i]);
+  for(var j = 0; j < i; j++) {
+    // console.log("i ",i,"j ",j);
+    while(bal[i].intersects(bal[j])) {
+      bal[i] = new Ball();
+      newball = true;
+    }
+    if(newball) {
+      j = -1;
+      newball = false;
+    }
+  }
 }
+// for (var i=0; i<30; i++) {
+//   bal.push(new Ball());
+// }
 
 function mousehovered(x, y) {
      noStroke();
