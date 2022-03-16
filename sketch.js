@@ -128,18 +128,31 @@ function mousepressed(x, y) {
 function Clickanywhere() {
   this.color = 'lightgray';
   this.show = function() {
-    fill(100);
+    fill(50);
     rect(wx / 6, wy / 4, 1000, 500);
     fill(this.color);
     textSize(32);
-    text("click around!", wx / 2, wy / 2);
-    textAlign(CENTER);
+    text("Welcome to Spacey Shooting Stars!", 450, 300);
+    // textAlign(CENTER);
     textStyle(BOLD);
+    textSize(20);
+    let s = 'Bright color balls that shoots across the screen leaving behind a beautiful tail like shooting stars';
+    text(s, 300, 350, 1000, 500);
+    s = 'The stars bounces off all 4 walls AND your mouse position';
+    text(s, 300, 410);
+    s = 'Click once to make the stars speed up, keep clicking for a firework EXPLOSION';
+    text(s, 300, 460);
+    fill('yellow');
+    s = 'Warning : Might contain intense light flashing effect';
+    text(s, 300, 510);
+
+    button = createButton("O K");
+    button.position(450, 560);
+    // button.mousePressed(changeBG);
   }
 }
 
-var ca = new Clickanywhere();
-
+var welcomeWindow = new Clickanywhere();
 let a = 0;
 
 function draw() {
@@ -213,7 +226,7 @@ function draw() {
 
   mousehovered(mouseX, mouseY);
 
-  ca.show();
+  welcomeWindow.show();
 }
 
 function windowResized() {
