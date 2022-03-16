@@ -126,8 +126,10 @@ function mousepressed(x, y) {
 }
 
 function Clickanywhere() {
-  this.color = 'gray';
+  this.color = 'lightgray';
   this.show = function() {
+    fill(100);
+    rect(wx / 6, wy / 4, 1000, 500);
     fill(this.color);
     textSize(32);
     text("click around!", wx / 2, wy / 2);
@@ -143,7 +145,6 @@ let a = 0;
 function draw() {
   // background(56,220, 250);
   background(0);
-  ca.show();
 
   for (var i = 0; i < bal.length; i++) {
     bal[i].update();
@@ -210,7 +211,9 @@ function draw() {
   //    a += 8;
   //  }
 
-   mousehovered(mouseX, mouseY);
+  mousehovered(mouseX, mouseY);
+
+  ca.show();
 }
 
 function windowResized() {
