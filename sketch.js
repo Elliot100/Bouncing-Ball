@@ -23,8 +23,13 @@ function randomColor() {
   );
 }
 
+let button;
 function setup() {
-  createCanvas(wx,wy);
+  createCanvas(wx, wy);
+  button = createButton("Let's go!");
+  button.addClass("letsgo");
+  button.position(700, 570);
+  // button.mousePressed(changeBG);
 }
 
 function Ball() {
@@ -146,14 +151,13 @@ function Clickanywhere() {
     s = 'Warning : Might contain intense light flashing effect';
     text(s, 300, 510);
 
-    button = createButton("O K");
-    button.position(450, 560);
-    // button.mousePressed(changeBG);
+
   }
 }
 
 var welcomeWindow = new Clickanywhere();
 let a = 0;
+
 
 function draw() {
   // background(56,220, 250);
@@ -234,3 +238,4 @@ function windowResized() {
     wy = window.innerHeight;
   resizeCanvas(windowWidth, windowHeight);
 }
+
