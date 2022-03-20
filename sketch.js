@@ -24,18 +24,12 @@ function randomColor() {
 }
 
 let button;
-let clickCounter = 0;
 function setup() {
   createCanvas(wx, wy);
   button = createButton("Let's go!");
   button.addClass("letsgo");
   button.position(700, 600);
-  button.mousePressed(() =>
-    mousepressed(mouseX, mouseY)
-  //   function () {
-  //   button.remove();
-  // }
-  );
+  button.mousePressed(mousepressed);
 }
 
 function Ball() {
@@ -120,39 +114,42 @@ function mousehovered(x, y) {
   }
 }
 
+function resetStars() {
+  for (var i = 0; i < 30; i++) {
+    bal[i] = new Ball();
+    trail[i].push([]);
+  }
+}
 
-function mousepressed(x, y) {
-  if (clickCounter == 0) {
+function mousepressed() {
     button.remove();
     welcomeWindow.display = false;
-    console.log(clickCounter);
-    clickCounter += 1;
-    button = createButton("Reset");
-    button.addClass("letsgo");
-    button.position(1400, 50);
-      // button.mousePressed(
-      //   () => mousepressed(mouseX, mouseY)
-      //   //   function () {
-      //   //   button.remove();
-      //   // }
-      // );
-  }  
-  if (clickCounter > 3) {
-    for (var i = 0; i < bal.length; i++) {
-      if (bal[i].y <= y && bal[i].y >= 20) {
-        bal[i].dy = -abs(bal[i].dy) * ACC;
-      } else if (bal[i].y > y && bal[i].y <= wy) {
-        bal[i].dy = abs(bal[i].dy) * ACC;
-      }
+    firstClick = false;
+    let resetButton = createButton("Reset");
+    resetButton.addClass("letsgo");
+    resetButton.position(1400, 50);
+    resetButton.mousePressed(resetStars);
+    
+    let speedupButton = createButton("Speed up");
+    speedupButton.addClass("letsgo");
+    speedupButton.position(1250, 50);
+    speedupButton.mousePressed(() => (speedUp(mouseX, mouseY)));
+}
 
-      if (bal[i].x <= x && bal[i].x >= 20) {
-        bal[i].dx = -abs(bal[i].dx) * ACC;
-      } else if (bal[i].x > x && bal[i].x <= wx) {
-        bal[i].dx = abs(bal[i].dx) * ACC;
-      }
+function speedUp(x, y) {
+  for (var i = 0; i < bal.length; i++) {
+    if (bal[i].y <= y && bal[i].y >= 20) {
+      bal[i].dy = -abs(bal[i].dy) * ACC;
+    } else if (bal[i].y > y && bal[i].y <= wy) {
+      bal[i].dy = abs(bal[i].dy) * ACC;
+    }
+
+    if (bal[i].x <= x && bal[i].x >= 20) {
+      bal[i].dx = -abs(bal[i].dx) * ACC;
+    } else if (bal[i].x > x && bal[i].x <= wx) {
+      bal[i].dx = abs(bal[i].dx) * ACC;
     }
   }
-  clickCounter += 1;
 }
 
 function Clickanywhere() {
@@ -238,9 +235,9 @@ function draw() {
   }
 
   //interaction
-  if(mouseIsPressed) {
-    mousepressed(mouseX, mouseY);
-  }
+  // if(mouseIsPressed) {
+  //   mousepressed(mouseX, mouseY);
+  // }
   //  trail.push([mouseX, mouseY]);
   //  for (let i = 0; i < trail.length; i++) {
   //    noStroke();
