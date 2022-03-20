@@ -24,6 +24,7 @@ function randomColor() {
 }
 
 let button;
+let bounceCounter = 0;
 function setup() {
   createCanvas(wx, wy);
   button = createButton("Let's go!");
@@ -98,7 +99,8 @@ for (var i=0; i<30; i++) {
 function mousehovered(x, y) {
      noStroke();
      fill(255, 20, 189);
-     rect(x - 50, y-10, 100, 20);
+     rect(x - 50, (2*wy)/3, 100, 20);
+    //  rect(x - 50, y-10, 100, 20);
   for (var i = 0; i < bal.length; i++) {
     if (bal[i].y < y && bal[i].y > y - 30 && bal[i].x < x + 50 && bal[i].x > x - 50) {
       bal[i].dy = -abs(bal[i].dy) * GRAVITY;
@@ -121,19 +123,40 @@ function resetStars() {
   }
 }
 
+function ballBounceCounter() {
+  this.display = false;
+  this.show = function() {
+    if (this.display) {
+      fill("white");
+      rect(wx / 2, wy / 2, 100, 100);
+    }
+  }
+}
+let counter = new ballBounceCounter();
+
 function mousepressed() {
     button.remove();
     welcomeWindow.display = false;
-    firstClick = false;
+
+    // fill('#27ae60');
+    // fill('white');
+    // rect(wx / 6, wy / 4, 1000, 500);
+    // textSize(32);
+    // text(bounceCounter, 1250, 50);
+    // textStyle(BOLD);
+
+    counter.display = true;
+    counter.show();
+
+    let speedupButton = createButton("Speed up");
+    speedupButton.addClass("letsgo");
+    speedupButton.position(1250, 50);
+    speedupButton.mousePressed(() => speedUp(mouseX, mouseY));
+
     let resetButton = createButton("Reset");
     resetButton.addClass("letsgo");
     resetButton.position(1400, 50);
     resetButton.mousePressed(resetStars);
-    
-    let speedupButton = createButton("Speed up");
-    speedupButton.addClass("letsgo");
-    speedupButton.position(1250, 50);
-    speedupButton.mousePressed(() => (speedUp(mouseX, mouseY)));
 }
 
 function speedUp(x, y) {
@@ -152,11 +175,11 @@ function speedUp(x, y) {
   }
 }
 
-function Clickanywhere() {
+function Welcome() {
   this.color = 'lightgray';
   this.display = true;
   this.show = function() {
-    if (this.display == true) {
+    if (this.display) {
     fill(50);
     rect(wx / 6, wy / 4, 1000, 500);
     fill(this.color);
@@ -169,7 +192,7 @@ function Clickanywhere() {
     text(s, 300, 350, 1000, 500);
     s = 'The stars bounces off all 4 walls AND your mouse position';
     text(s, 300, 410);
-    s = 'Click once to make the stars speed up, keep clicking for a firework EXPLOSION';
+    s = 'Click Speed up once to make the stars speed up, keep clicking for a firework EXPLOSION';
     text(s, 300, 460);
     fill('yellow');
     s = 'Warning : Might contain intense light flashing effect';
@@ -178,7 +201,7 @@ function Clickanywhere() {
   }
 }
 
-var welcomeWindow = new Clickanywhere();
+var welcomeWindow = new Welcome();
 let a = 0;
 
 
@@ -254,6 +277,7 @@ function draw() {
   mousehovered(mouseX, mouseY);
 
   welcomeWindow.show();
+  counter.show();
 }
 
 function windowResized() {
