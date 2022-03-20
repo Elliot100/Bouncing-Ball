@@ -24,12 +24,18 @@ function randomColor() {
 }
 
 let button;
+let firstClick = true;
 function setup() {
   createCanvas(wx, wy);
   button = createButton("Let's go!");
   button.addClass("letsgo");
-  button.position(700, 570);
-  // button.mousePressed(changeBG);
+  button.position(700, 600);
+  button.mousePressed(() =>
+    mousepressed(mouseX, mouseY)
+  //   function () {
+  //   button.remove();
+  // }
+  );
 }
 
 function Ball() {
@@ -115,24 +121,33 @@ function mousehovered(x, y) {
 }
 
 function mousepressed(x, y) {
-  for (var i = 0; i < bal.length; i++) {
-    if (bal[i].y <= y && bal[i].y >= 20) {
-      bal[i].dy = -abs(bal[i].dy) * ACC;
-    } else if (bal[i].y > y && bal[i].y <= wy) {
-      bal[i].dy = abs(bal[i].dy) * ACC;
-    }
+  if (firstClick == true) {
+    button.remove();
+    welcomeWindow.display = false;
+    firstClick = false;
+    return
+  } else {
+      for (var i = 0; i < bal.length; i++) {
+        if (bal[i].y <= y && bal[i].y >= 20) {
+          bal[i].dy = -abs(bal[i].dy) * ACC;
+        } else if (bal[i].y > y && bal[i].y <= wy) {
+          bal[i].dy = abs(bal[i].dy) * ACC;
+        }
 
-    if (bal[i].x <= x && bal[i].x >= 20) {
-      bal[i].dx = -abs(bal[i].dx) * ACC;
-    } else if (bal[i].x > x && bal[i].x <= wx) {
-      bal[i].dx = abs(bal[i].dx) * ACC;
-    }
+        if (bal[i].x <= x && bal[i].x >= 20) {
+          bal[i].dx = -abs(bal[i].dx) * ACC;
+        } else if (bal[i].x > x && bal[i].x <= wx) {
+          bal[i].dx = abs(bal[i].dx) * ACC;
+        }
+      }
   }
 }
 
 function Clickanywhere() {
   this.color = 'lightgray';
+  this.display = true;
   this.show = function() {
+    if (this.display == true) {
     fill(50);
     rect(wx / 6, wy / 4, 1000, 500);
     fill(this.color);
@@ -150,8 +165,7 @@ function Clickanywhere() {
     fill('yellow');
     s = 'Warning : Might contain intense light flashing effect';
     text(s, 300, 510);
-
-
+    }
   }
 }
 
