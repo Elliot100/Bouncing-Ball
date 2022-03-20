@@ -120,13 +120,22 @@ function mousehovered(x, y) {
   }
 }
 
+
 function mousepressed(x, y) {
   if (clickCounter == 0) {
     button.remove();
     welcomeWindow.display = false;
     console.log(clickCounter);
     clickCounter += 1;
-    
+    button = createButton("Reset");
+    button.addClass("letsgo");
+    button.position(1400, 50);
+      // button.mousePressed(
+      //   () => mousepressed(mouseX, mouseY)
+      //   //   function () {
+      //   //   button.remove();
+      //   // }
+      // );
   }  
   if (clickCounter > 3) {
     for (var i = 0; i < bal.length; i++) {
