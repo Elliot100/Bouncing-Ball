@@ -24,7 +24,7 @@ function randomColor() {
 }
 
 let button;
-let firstClick = true;
+let clickCounter = 0;
 function setup() {
   createCanvas(wx, wy);
   button = createButton("Let's go!");
@@ -121,26 +121,29 @@ function mousehovered(x, y) {
 }
 
 function mousepressed(x, y) {
-  if (firstClick == true) {
+  if (clickCounter == 0) {
     button.remove();
     welcomeWindow.display = false;
-    firstClick = false;
-    return
-  } else {
-      for (var i = 0; i < bal.length; i++) {
-        if (bal[i].y <= y && bal[i].y >= 20) {
-          bal[i].dy = -abs(bal[i].dy) * ACC;
-        } else if (bal[i].y > y && bal[i].y <= wy) {
-          bal[i].dy = abs(bal[i].dy) * ACC;
-        }
-
-        if (bal[i].x <= x && bal[i].x >= 20) {
-          bal[i].dx = -abs(bal[i].dx) * ACC;
-        } else if (bal[i].x > x && bal[i].x <= wx) {
-          bal[i].dx = abs(bal[i].dx) * ACC;
-        }
+    console.log(clickCounter);
+    clickCounter += 1;
+    
+  }  
+  if (clickCounter > 3) {
+    for (var i = 0; i < bal.length; i++) {
+      if (bal[i].y <= y && bal[i].y >= 20) {
+        bal[i].dy = -abs(bal[i].dy) * ACC;
+      } else if (bal[i].y > y && bal[i].y <= wy) {
+        bal[i].dy = abs(bal[i].dy) * ACC;
       }
+
+      if (bal[i].x <= x && bal[i].x >= 20) {
+        bal[i].dx = -abs(bal[i].dx) * ACC;
+      } else if (bal[i].x > x && bal[i].x <= wx) {
+        bal[i].dx = abs(bal[i].dx) * ACC;
+      }
+    }
   }
+  clickCounter += 1;
 }
 
 function Clickanywhere() {
