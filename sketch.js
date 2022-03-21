@@ -33,7 +33,7 @@ function setup() {
   button.mousePressed(mousepressed);
 }
 
-function Ball() {
+function Star() {
   this.color = colors[Math.floor(Math.random() * colors.length)];
   // this.radius = 20;
   this.radius = Math.random() * 20;
@@ -69,18 +69,18 @@ function Ball() {
   }
 }
 
-var bal = [];
+var star = [];
 // var newball = false;
-// bal.push(new Ball());
-// // console.log(bal[0]);
+// star.push(new Star());
+// // console.log(star[0]);
 // for(var i = 1; i < 20 ; i++) {
-//   // bal[i] = new Ball();
-//   bal.push(new Ball());
-//   // console.log(i," ",bal[i]);
+//   // star[i] = new Star();
+//   star.push(new Star());
+//   // console.log(i," ",star[i]);
 //   for(var j = 0; j < i; j++) {
 //     // console.log("i ",i,"j ",j);
-//     while(bal[i].intersects(bal[j])) {
-//       bal[i] = new Ball();
+//     while(star[i].intersects(star[j])) {
+//       star[i] = new Star();
 //       newball = true;
 //     }
 //     if(newball) {
@@ -92,7 +92,7 @@ var bal = [];
 
 let trail = [];
 for (var i=0; i<30; i++) {
-  bal.push(new Ball());
+  star.push(new Star());
   trail.push([]);
 }
 
@@ -101,25 +101,25 @@ function mousehovered(x, y) {
      fill(255, 20, 189);
      rect(x - 50, (2*wy)/3, 100, 20);
     //  rect(x - 50, y-10, 100, 20);
-    for (var i = 0; i < bal.length; i++) {
-    if (bal[i].y < (2 * wy) / 3 && bal[i].y > ((2 * wy) / 3) - 30 && bal[i].x < x + 50 && bal[i].x > x - 50) {
-      bal[i].dy = -abs(bal[i].dy) * GRAVITY;
+    for (var i = 0; i < star.length; i++) {
+    if (star[i].y < (2 * wy) / 3 && star[i].y > ((2 * wy) / 3) - 30 && star[i].x < x + 50 && star[i].x > x - 50) {
+      star[i].dy = -abs(star[i].dy) * GRAVITY;
       bounceCounter += 1;
-    } else if (bal[i].y >= (2 * wy) / 3 && bal[i].y < ((2 * wy) / 3) + 30 && bal[i].x < x + 50 && bal[i].x > x - 50) {
-      bal[i].dy = abs(bal[i].dy) * GRAVITY;
+    } else if (star[i].y >= (2 * wy) / 3 && star[i].y < ((2 * wy) / 3) + 30 && star[i].x < x + 50 && star[i].x > x - 50) {
+      star[i].dy = abs(star[i].dy) * GRAVITY;
     }
 
-    // if (bal[i].x < x && bal[i].x > x - 15) {
-    //   bal[i].dx = -abs(bal[i].dx) * GRAVITY;
-    // } else if (bal[i].x >= x && bal[i].x < x + 15) {
-    //   bal[i].dx = abs(bal[i].dx) * GRAVITY;
+    // if (star[i].x < x && star[i].x > x - 15) {
+    //   star[i].dx = -abs(star[i].dx) * GRAVITY;
+    // } else if (star[i].x >= x && star[i].x < x + 15) {
+    //   star[i].dx = abs(star[i].dx) * GRAVITY;
     // }
   }
 }
 
 function resetStars() {
   for (var i = 0; i < 30; i++) {
-    bal[i] = new Ball();
+    star[i] = new Star();
     trail[i].push([]);
   }
   bounceCounter = 0;
@@ -164,17 +164,17 @@ function mousepressed() {
 }
 
 function speedUp(x, y) {
-  for (var i = 0; i < bal.length; i++) {
-    if (bal[i].y <= y && bal[i].y >= 20) {
-      bal[i].dy = -abs(bal[i].dy) * ACC;
-    } else if (bal[i].y > y && bal[i].y <= wy) {
-      bal[i].dy = abs(bal[i].dy) * ACC;
+  for (var i = 0; i < star.length; i++) {
+    if (star[i].y <= y && star[i].y >= 20) {
+      star[i].dy = -abs(star[i].dy) * ACC;
+    } else if (star[i].y > y && star[i].y <= wy) {
+      star[i].dy = abs(star[i].dy) * ACC;
     }
 
-    if (bal[i].x <= x && bal[i].x >= 20) {
-      bal[i].dx = -abs(bal[i].dx) * ACC;
-    } else if (bal[i].x > x && bal[i].x <= wx) {
-      bal[i].dx = abs(bal[i].dx) * ACC;
+    if (star[i].x <= x && star[i].x >= 20) {
+      star[i].dx = -abs(star[i].dx) * ACC;
+    } else if (star[i].x > x && star[i].x <= wx) {
+      star[i].dx = abs(star[i].dx) * ACC;
     }
   }
 }
@@ -213,15 +213,15 @@ function draw() {
   // background(56,220, 250);
   background(0);
 
-  for (var i = 0; i < bal.length; i++) {
-    bal[i].update();
+  for (var i = 0; i < star.length; i++) {
+    star[i].update();
     // trail[i].push([5,6]);
-    // console.log(bal[i].x, " ", bal[i].y);
-     trail[i].push([bal[i].x, bal[i].y]);
+    // console.log(star[i].x, " ", star[i].y);
+     trail[i].push([star[i].x, star[i].y]);
     //  console.log(trail[i]);
      for (let j = 0; j < trail[i].length; j++) {
        noStroke();
-       ballColor = color(bal[i].color);
+       ballColor = color(star[i].color);
        ballColor.setAlpha(128 + 128 * sin(millis() / 1000));
        fill(ballColor);
 
@@ -237,27 +237,27 @@ function draw() {
        a += 8;
      }
 
-    // for (var j = i+1; j < bal.length; j++) {
-    //   if (bal[i].intersects(bal[j]) ) {
-    //     bal[i].dx *= -1;
-    //     bal[i].dy *= -1;
-    //     bal[j].dx *= -1;
-    //     bal[j].dy *= -1;
+    // for (var j = i+1; j < star.length; j++) {
+    //   if (star[i].intersects(star[j]) ) {
+    //     star[i].dx *= -1;
+    //     star[i].dy *= -1;
+    //     star[j].dx *= -1;
+    //     star[j].dy *= -1;
     //   }
     // }
-    bal[i].x += bal[i].dx;
-    bal[i].y += bal[i].dy;
+    star[i].x += star[i].dx;
+    star[i].y += star[i].dy;
 
     //bounce
-    if (bal[i].y + bal[i].radius >= wy || bal[i].y - bal[i].radius <= 0) {
-      // bal[i].dy = -bal[i].dy * GRAVITY;
-      bal[i].dy *= -1;
+    if (star[i].y + star[i].radius >= wy || star[i].y - star[i].radius <= 0) {
+      // star[i].dy = -star[i].dy * GRAVITY;
+      star[i].dy *= -1;
     }
     // else {
-    //   bal[i].dy += bal[i].vel;
+    //   star[i].dy += star[i].vel;
     // }
-    if (bal[i].x + bal[i].radius >= wx || bal[i].x - bal[i].radius <= 0) {
-      bal[i].dx *= -1;
+    if (star[i].x + star[i].radius >= wx || star[i].x - star[i].radius <= 0) {
+      star[i].dx *= -1;
     }
   }
 
