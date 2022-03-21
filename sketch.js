@@ -127,8 +127,10 @@ function ballBounceCounter() {
   this.display = false;
   this.show = function() {
     if (this.display) {
-      fill("white");
-      rect(wx / 2, wy / 2, 100, 100);
+      fill("#27ae60");
+      textSize(32);
+      text(bounceCounter, 1150, 80);
+      textStyle(BOLD);
     }
   }
 }
