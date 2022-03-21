@@ -101,10 +101,11 @@ function mousehovered(x, y) {
      fill(255, 20, 189);
      rect(x - 50, (2*wy)/3, 100, 20);
     //  rect(x - 50, y-10, 100, 20);
-  for (var i = 0; i < bal.length; i++) {
-    if (bal[i].y < y && bal[i].y > y - 30 && bal[i].x < x + 50 && bal[i].x > x - 50) {
+    for (var i = 0; i < bal.length; i++) {
+    if (bal[i].y < (2 * wy) / 3 && bal[i].y > ((2 * wy) / 3) - 30 && bal[i].x < x + 50 && bal[i].x > x - 50) {
       bal[i].dy = -abs(bal[i].dy) * GRAVITY;
-    } else if (bal[i].y >= y && bal[i].y < y + 30 && bal[i].x < x + 50 && bal[i].x > x - 50) {
+      bounceCounter += 1;
+    } else if (bal[i].y >= (2 * wy) / 3 && bal[i].y < ((2 * wy) / 3) + 30 && bal[i].x < x + 50 && bal[i].x > x - 50) {
       bal[i].dy = abs(bal[i].dy) * GRAVITY;
     }
 
@@ -121,6 +122,7 @@ function resetStars() {
     bal[i] = new Ball();
     trail[i].push([]);
   }
+  bounceCounter = 0;
 }
 
 function ballBounceCounter() {
