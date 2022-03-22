@@ -1,25 +1,8 @@
-
-//setup variables
 var wx = window.innerWidth;
 var wy = window.innerHeight;
 const GRAVITY = 1;
 const ACC = 1.5;
 const colors = ["lime","cyan","red","yellow","fuchsia","orange"];
-// const colors = ["0, 255, 0", "125, 254, 227", "255, 0, 0", "255, 240, 0", "255, 0, 255", "249, 105, 14"];
-
-function randomColor() {
-  return (
-    "rgba(" +
-    Math.round(Math.random() * 250) +
-    "," +
-    Math.round(Math.random() * 250) +
-    "," +
-    Math.round(Math.random() * 250) +
-    "," +
-    Math.ceil(Math.random() * 10) / 5 +
-    ")"
-  );
-}
 
 let button;
 let bounceCounter = 0;
@@ -33,61 +16,21 @@ function setup() {
 
 function Star() {
   this.color = colors[Math.floor(Math.random() * colors.length)];
-  // this.radius = 20;
   this.radius = Math.random() * 20;
   this.x = Math.random() * (wx - this.radius * 2) + this.radius;
   this.y = Math.random() * (wy - this.radius);
   this.dy = Math.random() * 8;
   this.dx = Math.round((Math.random() - 0.5) * 20);
   this.vel = 0.08;
-  // this.vel = Math.random() / 5;
 
   this.update = function() {
     fill(this.color);
     noStroke();
     circle(this.x, this.y, this.radius * 2);
   }
-
-  this.intersects = function(other) {
-    // console.log("this",this);
-    // console.log("other", other);
-    // var a = x1 - x2;
-    // var b = y1 - y2;
-
-    // var c = Math.sqrt(a * a + b * b);
-    // var d = dist(this.x,this.y,other.x,other.y);
-    var a = other.y - this.y;
-    var b = other.x - this.x;
-    var d = Math.sqrt(a*a + b*b);
-    if (d < (this.radius + other.radius) ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 }
 
 var star = [];
-// var newball = false;
-// star.push(new Star());
-// // console.log(star[0]);
-// for(var i = 1; i < 20 ; i++) {
-//   // star[i] = new Star();
-//   star.push(new Star());
-//   // console.log(i," ",star[i]);
-//   for(var j = 0; j < i; j++) {
-//     // console.log("i ",i,"j ",j);
-//     while(star[i].intersects(star[j])) {
-//       star[i] = new Star();
-//       newball = true;
-//     }
-//     if(newball) {
-//       j = -1;
-//       newball = false;
-//     }
-//   }
-// }
-
 let trail = [];
 for (var i=0; i<30; i++) {
   star.push(new Star());
@@ -106,12 +49,6 @@ function mousehovered(x, y) {
     } else if (star[i].y >= (3 * wy) / 4 && star[i].y < (3 * wy) / 4 + 30 && star[i].x < x + 50 && star[i].x > x - 50) {
       star[i].dy = abs(star[i].dy) * GRAVITY;
     }
-
-    // if (star[i].x < x && star[i].x > x - 15) {
-    //   star[i].dx = -abs(star[i].dx) * GRAVITY;
-    // } else if (star[i].x >= x && star[i].x < x + 15) {
-    //   star[i].dx = abs(star[i].dx) * GRAVITY;
-    // }
   }
 }
 
@@ -140,13 +77,6 @@ function mousepressed() {
     button.remove();
     welcomeWindow.display = false;
     bounceCounter = 0;
-    // fill('#27ae60');
-    // fill('white');
-    // rect(wx / 6, wy / 4, 1000, 500);
-    // textSize(32);
-    // text(bounceCounter, 1250, 50);
-    // textStyle(BOLD);
-
     counter.display = true;
     counter.show();
 
@@ -214,20 +144,12 @@ let a = 0;
 function drawStars() {
   for (var i = 0; i < star.length; i++) {
     star[i].update();
-    // trail[i].push([5,6]);
-    // console.log(star[i].x, " ", star[i].y);
     trail[i].push([star[i].x, star[i].y]);
-    //  console.log(trail[i]);
     for (let j = 0; j < trail[i].length; j++) {
       noStroke();
       ballColor = color(star[i].color);
       ballColor.setAlpha(128 + 128 * sin(millis() / 1000));
       fill(ballColor);
-
-      // squareColor = color(100, 50, 100);
-      // squareColor.setAlpha(128 + 128 * sin(millis() / 1000));
-      //  fill(255, 20, 189, a);
-      //  rect(trail[i][0] - 50, trail[i][1], i + 80, i + 2);
       ellipse(trail[i][j][0], trail[i][j][1], j);
       if (a > 150) {
         trail[i].shift();
@@ -236,25 +158,13 @@ function drawStars() {
       a += 8;
     }
 
-    // for (var j = i+1; j < star.length; j++) {
-    //   if (star[i].intersects(star[j]) ) {
-    //     star[i].dx *= -1;
-    //     star[i].dy *= -1;
-    //     star[j].dx *= -1;
-    //     star[j].dy *= -1;
-    //   }
-    // }
     star[i].x += star[i].dx;
     star[i].y += star[i].dy;
 
-    //bounce
+    //bounce off 4 walls
     if (star[i].y + star[i].radius >= wy || star[i].y - star[i].radius <= 0) {
-      // star[i].dy = -star[i].dy * GRAVITY;
       star[i].dy *= -1;
     }
-    // else {
-    //   star[i].dy += star[i].vel;
-    // }
     if (star[i].x + star[i].radius >= wx || star[i].x - star[i].radius <= 0) {
       star[i].dx *= -1;
     }
@@ -263,27 +173,9 @@ function drawStars() {
 
 
 function draw() {
-  // background(56,220, 250);
   background(0);
 
   drawStars();
-
-  //interaction
-  // if(mouseIsPressed) {
-  //   mousepressed(mouseX, mouseY);
-  // }
-  //  trail.push([mouseX, mouseY]);
-  //  for (let i = 0; i < trail.length; i++) {
-  //    noStroke();
-  //    fill(255, 20, 189, a);
-  //   //  rect(trail[i][0] - 50, trail[i][1], i + 80, i + 2);
-  //    ellipse(trail[i][0], trail[i][1], i);
-  //    if (a > 255) {
-  //      trail.shift();
-  //      a = 0;
-  //    }
-  //    a += 8;
-  //  }
 
   mousehovered(mouseX, mouseY);
 
