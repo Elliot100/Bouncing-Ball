@@ -183,8 +183,8 @@ function Welcome() {
   this.show = function() {
     if (this.display) {
     // fill(50);
-    let newColor = color('#202020');
-    newColor.setAlpha(200);
+    let newColor = color('#2a2a2a');
+    newColor.setAlpha(220);
     fill(newColor);
     rect(wx / 6, wy / 4, 1000, 500);
     fill(this.color);
