@@ -39,7 +39,7 @@ function Star() {
   this.y = Math.random() * (wy - this.radius);
   this.dy = Math.random() * 8;
   this.dx = Math.round((Math.random() - 0.5) * 20);
-  this.vel = 0.1;
+  this.vel = 0.08;
   // this.vel = Math.random() / 5;
 
   this.update = function() {
