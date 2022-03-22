@@ -97,13 +97,13 @@ for (var i=0; i<30; i++) {
 function mousehovered(x, y) {
      noStroke();
      fill(255, 20, 189);
-     rect(x - 50, (2*wy)/3, 100, 20);
+     rect(x - 50, (3 * wy) / 4, 100, 20);
     //  rect(x - 50, y-10, 100, 20);
     for (var i = 0; i < star.length; i++) {
-    if (star[i].y < (2 * wy) / 3 && star[i].y > ((2 * wy) / 3) - 30 && star[i].x < x + 50 && star[i].x > x - 50) {
+    if (star[i].y < (3 * wy) / 4 && star[i].y > (3 * wy) / 4 - 30 && star[i].x < x + 50 && star[i].x > x - 50) {
       star[i].dy = -abs(star[i].dy) * GRAVITY;
       bounceCounter += 1;
-    } else if (star[i].y >= (2 * wy) / 3 && star[i].y < ((2 * wy) / 3) + 30 && star[i].x < x + 50 && star[i].x > x - 50) {
+    } else if (star[i].y >= (3 * wy) / 4 && star[i].y < (3 * wy) / 4 + 30 && star[i].x < x + 50 && star[i].x > x - 50) {
       star[i].dy = abs(star[i].dy) * GRAVITY;
     }
 
