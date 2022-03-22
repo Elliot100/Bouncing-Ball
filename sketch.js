@@ -139,7 +139,7 @@ let counter = new ballBounceCounter();
 function mousepressed() {
     button.remove();
     welcomeWindow.display = false;
-
+    bounceCounter = 0;
     // fill('#27ae60');
     // fill('white');
     // rect(wx / 6, wy / 4, 1000, 500);
@@ -182,7 +182,10 @@ function Welcome() {
   this.display = true;
   this.show = function() {
     if (this.display) {
-    fill(50);
+    // fill(50);
+    let newColor = color('#202020');
+    newColor.setAlpha(200);
+    fill(newColor);
     rect(wx / 6, wy / 4, 1000, 500);
     fill(this.color);
     textSize(32);
