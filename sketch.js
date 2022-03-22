@@ -27,7 +27,7 @@ function setup() {
   createCanvas(wx, wy);
   button = createButton("Let's go!");
   button.addClass("letsgo");
-  button.position(700, 600);
+  button.position(700, 630);
   button.mousePressed(mousepressed);
 }
 
@@ -193,15 +193,17 @@ function Welcome() {
     // textAlign(CENTER);
     textStyle(BOLD);
     textSize(20);
-    let s = 'Bright color balls that shoots across the screen leaving behind a beautiful tail like shooting stars';
-    text(s, 300, 350, 1000, 500);
-    s = 'The stars bounces off all 4 walls AND your mouse position';
-    text(s, 300, 410);
-    s = 'Click Speed up once to make the stars speed up, keep clicking for a firework EXPLOSION';
-    text(s, 300, 460);
+    let s =
+      "A relaxing game where brightly colored balls shoot across the screen, leaving behind beautiful tails, like shooting stars.";
+    text(s, 300, 350, 950, 500);
+    s =
+      "The stars bounce off all four walls and off the cursor bar. The counter on the top-right keeps track of the number of balls that have bounced off the top of the cursor bar.";
+    text(s, 300, 420, 950, 500);
+    s = 'Click "Speed Up" to make the stars speed up. Keep clicking for a firework of EXPLOSION!';
+    text(s, 300, 490, 950, 500);
     fill('yellow');
-    s = 'Warning : Might contain intense light flashing effect';
-    text(s, 300, 510);
+    s = "Warning: Upon speeding up the animation, application may contain intense light flashing effects.";
+    text(s, 300, 540, 950, 500);
     }
   }
 }
